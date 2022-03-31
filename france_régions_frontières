@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jan 20 11:25:44 2022
+
+@author: harry
+"""
+
+import numpy as np
+import pandas as pd
+
+import glob
+import json
+
+# On importe le tableau excel.
+
+régions_barycentres=pd.read_excel('Centre_region.xlsx')
+
+
+# On vire la ligne inutile avec les nan.
+
+régions_barycentres=régions_barycentres.dropna(axis=0)
+
+# On vire les colonnes inutiles pour nous.
+
+régions_barycentres=régions_barycentres.drop(['Aire (km²)', 'Unnamed: 4'], axis=1)
+
+# On vire la ligne sur la Corse, inutile pour nous.
+
+régions_barycentres=régions_barycentres[régions_barycentres['Régions métropolitaines']!='Corse']
+
+# On renomme correctement les colonnes.
+
+régions_barycentres.columns=['régions', 'longitude', 'latitude']
+
+# On va changer le type de variables dans 'latitude' et 'longitude' en float.
+
+régions_barycentres['longitude']=régions_barycentres.apply(lambda row: row['longitude'][0]+str('.')+row['longitude'][2]+row['longitude'][3]+row['longitude'][-1], axis=1)
+
+régions_barycentres['longitude']=régions_barycentres['longitude'].apply(lambda x: float(x[:-1]) if x[-1]=='E' else float(x[:-1])*-1)
+
+régions_barycentres['longitude']=régions_barycentres['longitude'].apply(lambda x: int(x)+((x-int(x))/60)*100)
+
+régions_barycentres['latitude']=régions_barycentres.apply(lambda row: row['latitude'][:2]+str('.')+row['latitude'][3:5], axis=1)
+
+régions_barycentres['latitude']=régions_barycentres['latitude'].apply(lambda x: float(x))
+
+régions_barycentres['latitude']=régions_barycentres['latitude'].apply(lambda x: int(x)+((x-int(x))/60)*100)
+
+# On exporte le nouveau tableau des barycentres des régions, utile pour le module 'meteo_terre_traitement_total'.
+
+régions_barycentres.to_csv('régions_barycentres.csv')
+
+
+
+
+   
+     

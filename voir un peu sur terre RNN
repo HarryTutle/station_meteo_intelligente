@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Feb  2 16:28:36 2022
+
+@author: harry
+"""
+
+import numpy as np
+import pandas as pd
+from datetime import datetime
+import matplotlib.pyplot as plt
+
+import gzip
+import glob
+
+import Meteo_terre_traitement_total as mttt
+
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder, RobustScaler
+import tensorflow
+from tensorflow import keras
+from tensorflow.keras.callbacks import EarlyStopping
+
+"""
+dataset_2016=np.load("dataset_1_jours_point_rosée_viré_direction_2016.npy")
+cible_2016=np.load("labels_1_jours_point_rosée_viré_direction_2016.npy")
+
+dataset_2017=np.load("dataset_1_jours_point_rosée_viré_direction_2017.npy")
+cible_2017=np.load("labels_1_jours_point_rosée_viré_direction_2017.npy")
+
+dataset_2018=np.load("dataset_1_jours_point_rosée_viré_direction_2018.npy")
+cible_2018=np.load("labels_1_jours_point_rosée_viré_direction_2018.npy")
+
+
+
+
+dataset=np.concatenate([dataset_2016, dataset_2017, dataset_2018], axis=0)
+cible=np.concatenate([cible_2016, cible_2017, cible_2018], axis=0)
+"""
+dataset=np.load("dataset_1_jour_point_rosée_viré_force.npy")
+cible=np.load("labels_1_jour_point_rosée_viré_force.npy")
+
+
+def tenseur(objet):
+    
+  dataset_3D=objet[:,3:-1]
+  dataset_3D=[dataset_3D[:,(i*7-7):i*7] for i in range(1, 25)]
+  dataset_3D=np.dstack(dataset_3D)
+  
+  dataset_3D=np.moveaxis(dataset_3D, 1, -1)
+  
+  return dataset_3D
+
+
+
+
+encoder=LabelEncoder()
+cible=encoder.fit_transform(cible)
+
+
+
+
+X_train, X_test, y_train, y_test=train_test_split(dataset, cible, test_size=0.3, random_state=0, stratify=cible)
+
+X_val, X_eval, y_val, y_eval=train_test_split(X_test, y_test, test_size=0.5, random_state=0, stratify=y_test)
+treat=RobustScaler()
+treat.fit(X_train)
+X_train_treat=treat.transform(X_train)
+X_val_treat=treat.transform(X_val)
+X_eval_treat=treat.transform(X_eval)
+
+X_train_treat=tenseur(X_train_treat)
+X_val_treat=tenseur(X_val_treat)
+X_eval_treat=tenseur(X_eval_treat)
+
+
+model=keras.models.Sequential()
+model.add(keras.layers.LSTM(203, return_sequences=True, input_shape=(None, 7)))
+model.add(keras.layers.LSTM(203, return_sequences=True))
+model.add(keras.layers.LSTM(203, return_sequences=True))
+model.add(keras.layers.LSTM(203, return_sequences=True))
+model.add(keras.layers.LSTM(203))
+model.add(keras.layers.Dense(8, activation='softmax'))
+
+print(model.summary())
+
+model.compile(loss='sparse_categorical_crossentropy', metrics=['accuracy'], optimizer=keras.optimizers.Adam(learning_rate=0.001))
+
+stop=EarlyStopping(monitor='val_loss', mode='min', patience=2)
+
+history=model.fit(X_train_treat, y_train, epochs=100, validation_data=(X_val_treat, y_val), callbacks=stop)
+pd.DataFrame(history.history).plot(figsize=(8,5))
+plt.grid(True)
+plt.gca().set_ylim(0, 2)
+plt.show()
+
+print(model.evaluate(X_eval_treat, y_eval))
+
