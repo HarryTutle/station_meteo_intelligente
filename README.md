@@ -50,6 +50,16 @@ Quelques photos:
 ![P1220776](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/910453bd-c5cf-478a-92bd-9008040c05c7)
 
 
+![P1220791](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/1680cb64-f05b-41c6-b5d2-b99ba308a921)
+
+
+![P1220792](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/bd033999-0419-435f-9062-ee1a7a3fac53)
+
+
+![P1220793](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/83f4655f-26d8-429e-9d0f-c235cbaf0e9b)
+
+
+
 La station météo fonctionne en autonomie grâce à un panneau solaire qui alimente une batterie de 46 A/h par le biai d'un régulateur de charge. Pour fonctionner en autonomie la station ne s'allume que dix minutes par heure, le temps de collecter, enregistrer, prédire et transmettre.
 
 
