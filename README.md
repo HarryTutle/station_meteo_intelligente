@@ -32,5 +32,27 @@ Quelques photos:
 ![P1220783](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/878bcd59-e932-4700-8f15-a7d43d5e1f29)
 
 
+![P1220784](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/b9c15c6c-06cd-43db-b495-82a9e9d116e0)
+
+
+![P1220785](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/253b4bc7-24ab-4e3f-9592-3e505c2cc036)
+
+
+![P1220786](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/081048ca-586f-4caf-82b8-2ccc9d779cec)
+
+
+![P1220779](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/59774084-d99e-4781-a188-96ecc9751fd5)
+
+
+![P1220778](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/990126ef-150b-478d-b6e2-43e095a379f0)
+
+
+![P1220776](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/910453bd-c5cf-478a-92bd-9008040c05c7)
+
+
+
+
+
+
 
 
