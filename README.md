@@ -27,5 +27,10 @@ A venir:
 - traitement des images via un encodeur convolutif.
 - nouveaux modèles prédictifs basés sur les données enregistrées depuis bientôt un an.
 
+Quelques photos:
+
+![P1220783](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/878bcd59-e932-4700-8f15-a7d43d5e1f29)
+
+
 
 
