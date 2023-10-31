@@ -62,6 +62,28 @@ Quelques photos:
 
 La station météo fonctionne en autonomie grâce à un panneau solaire qui alimente une batterie de 46 A/h par le biai d'un régulateur de charge. Pour fonctionner en autonomie la station ne s'allume que dix minutes par heure, le temps de collecter, enregistrer, prédire et transmettre.
 
+31 octobre 2023: j'ai ajouté des scripts suite à la "récolte" d'un an de météo locale; le but cette fois n'est plus d'utiliser les données de MeteoNet et Eco2mix, mais juste les données captées depuis un an par la station pour avoir un modele prédictif sur la meteo locale.
+Cette fois, comme on va avoir moins d'échantillons que le jeu MeteoNet (et un pc avec plus de puissance de calcul), on va programmer un seul modele de deep learning RNN (LSTM) pour prédire en même temps toutes nos variables (direction du vent, force, humidité, température et luminosité) et aussi apte à utiliser les phots du ciel comme variable d'entrée.
+
+Etape 1: reformater les images de la raspberry pi
+
+avec le script "reformateur_images.py", on va crée un dossier avec dedans nos images reformatées en 64*64 et en noir et blanc. Dans ce dossier on aura également toutes nos images regroupées sous forme de tenseur; comme elles ne seront pas rangées dans l ordre chronologique, un index sera également fournit dans le dossier. Cette étape permet de réduire la taille des images pour ne pas surcharger le travail de l'encodeur pour extraire les caractéristiques des images.
+
+Etape 2: encoder les images.
+
+Avec le tenseur et son index("auto_encodeur_convolutif_photos_ciel.py"), on va encoder les images via un encodeur convolutif, afin d'extraire un vecteur contenant 960 dimensions de caractéristiques à la place de chaque image. Cela va permettre ensuite de soumettre les images, sous cette forme, à un LSTM qui va traquer l'évolution de ces dimensions dans le temps.
+
+Etape 3: agencer les images pour le LSTM, puis lancer l'entrainement.
+
+Pour le moment je n'ai pas fait une recherche de paramètres très étendue (GridSearchCV) à cause du manque de temps et comme toujours de puissance de calcul, mais avec le modele dans ce script ("traitement_data_meteo_locale.py") on arrive à ces courbes suite à un entrainement d'une quarantaine d'époques:
+
+![modele_rnn_global](https://github.com/HarryTutle/station_meteo_intelligente/assets/82940602/8fac5224-c087-413a-a19e-17c848677ee6)
+
+les courbes en bleu donnent la perte lors de l'entrainement; en rouge la mae toujours pour l'entrainement. En orange la perte pour la validation et en vert la mae pour la validation.
+
+Après il y a très certainement d'autres agencements à tester, plus efficaces pour l'encodage des images, l'architecture du LSTM...A tester !!! Du coup je met en plus sur le git mes données locales. Amusez-vous bien!
+
+
 
 
 
