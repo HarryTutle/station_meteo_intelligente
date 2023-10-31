@@ -81,7 +81,8 @@ Pour le moment je n'ai pas fait une recherche de paramètres très étendue (Gri
 
 les courbes en bleu donnent la perte lors de l'entrainement; en rouge la mae toujours pour l'entrainement. En orange la perte pour la validation et en vert la mae pour la validation.
 
-Après il y a très certainement d'autres agencements à tester, plus efficaces pour l'encodage des images, l'architecture du LSTM...A tester !!! Du coup je met en plus sur le git mes données locales. Amusez-vous bien!
+Après il y a très certainement d'autres agencements à tester, plus efficaces pour l'encodage des images, l'architecture du LSTM...A tester !!! Du coup je met en plus sur le git mes données locales(data_total.csv). Amusez-vous bien!
+
 
 
 
