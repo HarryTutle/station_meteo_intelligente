@@ -88,7 +88,24 @@ les courbes en bleu donnent la perte lors de l'entrainement; en rouge la mae tou
 Après il y a très certainement d'autres agencements à tester, plus efficaces pour l'encodage des images, l'architecture du LSTM...A tester !!! Du coup je met en plus sur le git mes données locales(data_total.csv, les fichier index_tensuer et les fichiers compressés tenseur pour les photos du ciel). Amusez-vous bien!
 
 
+27 fevrier 2024: la raspberry a laché, du coup je profite du petit dépannage pour expliquer le montage de la station (j'aurai pu utiliser fritzing mais ça aurait été illisible il y a pas mal de choses à intégrer):
 
+1) La raspberry pi 3 b+
+
+   on va avoir deux prises usb mobilisées, une pour enregistrer sur la clé usb et l'autre pour communiquer avec l'arduino. Concernant l'émetteur radio son VCC sera branché sur la pin 2 (5v), son GND sur la pin 6 (gnd) et la borne data sera sur la pin 11. Pour l'ecran oled qui affichera la prévision, son VCC sera sur la pin 1 (3.3 volts), son GND sur la pin 14 (gnd), son SDA sur la pin 3 et son SCL sur la pin 5.
+
+2) La arduino uno
+
+   le plus important!!! Pour éviter de faire un reset à chaque ouverture de la communication série entre la arduino et la raspberry pi, il faut brancher un condensateur de 10 microfarads sur la pin reset de l'arduino et le GND. Pour monter l'anémo, girouette et pluviometre j'ai utilisé une platine grove de lextronic où on peut tout connecter dessus. Cette platine se branche sur tout les pins du coté analogique. Le relai qui allume la raspberry est branché sur la pin 4, l'horloge DS3231 a son pin SQW branché sur la pin 2 de l'arduino (gère le réveil).Pour le BME 280 et l'horloge leurs SDA et SCL de liasion I2C sont reliés aux pins SDA et SCL de l'arduino. Le pin A3 accueille le phototransistor, le pin A0 le pluviomètre, le pin A1 la girouette et la pin A2 l'anémo. Pour éviter les bugs il est préférable de relier tout ces composants à une masse commune.
+
+3) autre
+
+   La raspberry pi est branchée sur la batterie par le biai d'un transfo qui lui fournit une tension de 5V et 5A.
+   Ce branchement est activé par le relai de l'arduino. La arduion est également branchée à la batterie via un autre transfo pour lui fournir 9V (54W).
+
+
+
+Avant de reconditionner la station j'ai viré la caméra pour simplifier l'ensemble; précédemment je trouvai que l'info apportée par les photos du ciel n'apportait pas une grande pluvalue, et amenait en revanche bien plus de complexité superflue. Donc j'ai fait un modèle LSTM pour prédire la direction/force/humidité/température/luminosité juste avec mes données locales qui se sont arretées à décembre (soit un an et demi environ). J'ai mis en telechargement mes données meteo locales, ce nouveau modèle, et un script python pour permettre la création de ce modèle.
 
 
 
